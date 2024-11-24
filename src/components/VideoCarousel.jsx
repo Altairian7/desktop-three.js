@@ -2,6 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import { highlightsSlides } from "../constants";
 import gsap from "gsap";
 import { pauseImg, playImg, replayImg } from "../utils";
+import { useGSAP } from "@gsap/react";
 
 const VideoCarousel = () => {
   const videoRef = useRef([]);
@@ -17,6 +18,10 @@ const VideoCarousel = () => {
   });
 
   const { isEnd, isLastVideo, startPlay, videoId, isPlaying } = video;
+
+  useGSAP(() => {
+
+  }, [isEnd, videoId])
 
   useEffect(() => {
     const currentProgress = 0;
@@ -52,6 +57,8 @@ const VideoCarousel = () => {
         return video;
     }
   };
+
+  
 
   return (
     <>
