@@ -17,9 +17,8 @@ const VideoCarousel = () => {
     isPlaying: false,
   });
 
+  const [loadedData, setLoadedData] = useState([]);
 
-  const[loadedData, setLoadedData] = useState([]);
-  
   const { isEnd, isLastVideo, startPlay, videoId, isPlaying } = video;
 
   useGSAP(() => {
@@ -41,14 +40,15 @@ const VideoCarousel = () => {
   useEffect(() => {
     if (loadedData.length > 3) {
       if (!isPlaying) {
-        video.ref.current[videoId].pause();
+        videoRef.current[videoId].pause();
       } else {
         startPlay && videoRef.current[videoId].play();
       }
     }
   }, [startPlay, videoId, isPlaying, loadedData]);
 
-  const handleLoadedMetaData = (i, e) => setLoadedData((pre) => [...pre, e])
+
+  const handleLoadedMetaData = (i, e) => setLoadedData((pre) => [...pre, e]);
 
   useEffect(() => {
     const currentProgress = 0;
@@ -58,6 +58,7 @@ const VideoCarousel = () => {
       // animate the progress of the video
       let anim = gsap.to(span[videoId], {
         onUpdate: () => {},
+        onComplete: () => {},
       });
     }
   }, [videoId, startPlay]);
