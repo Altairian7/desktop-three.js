@@ -17,11 +17,38 @@ const VideoCarousel = () => {
     isPlaying: false,
   });
 
+
+  const[loadedData, setLoadedData] = useState([]);
+  
   const { isEnd, isLastVideo, startPlay, videoId, isPlaying } = video;
 
   useGSAP(() => {
+    gsap.to("#video", {
+      scrollTrigger: {
+        trigger: "#video",
+        toggleActions: "restart none none none",
+      },
+      onComplete: () => {
+        setVideo((pre) => ({
+          ...pre,
+          startPlay: true,
+          isPlaying: true,
+        }));
+      },
+    });
+  }, [isEnd, videoId]);
 
-  }, [isEnd, videoId])
+  useEffect(() => {
+    if (loadedData.length > 3) {
+      if (!isPlaying) {
+        video.ref.current[videoId].pause();
+      } else {
+        startPlay && videoRef.current[videoId].play();
+      }
+    }
+  }, [startPlay, videoId, isPlaying, loadedData]);
+
+  const handleLoadedMetaData = (i, e) => setLoadedData((pre) => [...pre, e])
 
   useEffect(() => {
     const currentProgress = 0;
@@ -58,8 +85,6 @@ const VideoCarousel = () => {
     }
   };
 
-  
-
   return (
     <>
       <div className="flex items-center">
@@ -79,6 +104,7 @@ const VideoCarousel = () => {
                       isPlaying: true,
                     }));
                   }}
+                  onLoadedMetadata={(e) => handleLoadedMetaData(i, e)}
                 >
                   <source src={list.video} type="video/mp4" />
                 </video>
