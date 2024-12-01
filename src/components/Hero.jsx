@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { heroVideo, smallHeroVideo } from '../utils';
