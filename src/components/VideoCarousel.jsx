@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { useRef, useEffect, useState } from "react";
 import { highlightsSlides } from "../constants";
 import gsap from "gsap";
