@@ -4,11 +4,16 @@ import './index.css'
 import App from './App.jsx'
 
 import * as Sentry from "@sentry/react";
+import { Integrations } from "@sentry/tracing";
 
 Sentry.init({
   dsn: "https://0b3d46434acb88cb8739ef229a79816a@o4508393562898432.ingest.us.sentry.io/4508393564012544",
   integrations: [
     Sentry.browserTracingIntegration(),
+    new Integrations.BrowserTracing(),
+    Sentry.reactRouterV6BrowserTracingIntegration({
+      useEffect: React.useEffect,
+    }),
     Sentry.replayIntegration(),
   ],
   // Tracing
